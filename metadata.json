@@ -1,0 +1,5 @@
+{
+  "name": "Gemini Code Reviewer",
+  "description": "An automated code review tool that uses the Gemini API to analyze code and provide feedback. Paste your code, select the language, and get an AI-powered review.",
+  "requestFramePermissions": []
+}
