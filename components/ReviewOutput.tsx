@@ -87,7 +87,7 @@ export const ReviewOutput: React.FC<ReviewOutputProps> = ({ review }) => {
               <h3 id={`section-title-${sectionIndex}`} className="text-xl font-semibold text-sky-300 mb-3">{section.title}</h3>
               <ul className="space-y-4">
                 {section.points.map((point: ReviewPoint, pointIndex: number) => (
-                  <li key={pointIndex} className="bg-gray-750 p-4 rounded-md border border-gray-600 shadow">
+                  <li key={pointIndex} className="bg-gray-800 p-4 rounded-md border border-gray-600 shadow">
                     <div className="flex items-center mb-2">
                       <PointTypeBadge type={point.type} />
                       {point.lineNumber && (
