@@ -100,9 +100,7 @@ const App: React.FC = () => {
                     <LoadingSpinner small />
                     <span className="ml-2">{t('reviewing')}</span>
                   </>
-                ) : (
-                  {t('reviewButton')}
-                )}
+                ) : t('reviewButton')}
               </button>
               <button
                 onClick={handleClear}
