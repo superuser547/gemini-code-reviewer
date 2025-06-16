@@ -127,7 +127,7 @@ const App: React.FC = () => {
           )}
         </main>
         <footer className="text-center mt-12 text-gray-500 text-sm">
-            <p>Powered by Google Gemini. Ensure your API_KEY environment variable is configured.</p>
+            <p>Powered by Google Gemini. Ensure your GEMINI_API_KEY environment variable is configured.</p>
             <p>&copy; {new Date().getFullYear()} AI Code Reviewer</p>
         </footer>
       </div>

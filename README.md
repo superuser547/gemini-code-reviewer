@@ -49,7 +49,7 @@ Gemini Code Reviewer — это инструмент для автоматизи
    ```
 3. Создайте файл `.env.local` в корневой директории и добавьте ваш API ключ:
    ```env
-   API_KEY=your_gemini_api_key_here
+   GEMINI_API_KEY=your_gemini_api_key_here
    ```
 
 ## Запуск приложения
