@@ -18,12 +18,12 @@ export const reviewCode = async (
   language: Language,
   reviewLanguage: ReviewLanguage // New parameter
 ): Promise<StructuredReview> => {
-  if (!process.env.API_KEY) {
-    console.error("API_KEY environment variable is not set.");
-    throw new Error("Gemini API Key is missing. Please ensure the API_KEY environment variable is correctly set.");
+  if (!process.env.GEMINI_API_KEY) {
+    console.error("GEMINI_API_KEY environment variable is not set.");
+    throw new Error("Gemini API Key is missing. Please ensure the GEMINI_API_KEY environment variable is correctly set.");
   }
 
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
   const programmingLanguageLabel = getLanguageLabel(language);
   const feedbackLanguageLabel = getReviewLanguageLabel(reviewLanguage);
 
@@ -148,7 +148,7 @@ Your JSON Review (strictly in the format above, with all text in ${feedbackLangu
   } catch (error) {
     console.error('Error calling Gemini API:', error);
     if (error instanceof Error && error.message.includes("API key not valid")) {
-        throw new Error("Invalid Gemini API Key. Please check your API_KEY environment variable.");
+        throw new Error("Invalid Gemini API Key. Please check your GEMINI_API_KEY environment variable.");
     }
     if (error instanceof Error) {
         throw new Error(`Failed to get review from Gemini (review language: ${feedbackLanguageLabel}): ${error.message}`);
