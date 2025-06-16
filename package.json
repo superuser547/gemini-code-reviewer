@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint . --ext .ts,.tsx",
+    "test": "npm run build-tests && node --test tests-dist/tests",
+    "build-tests": "npx tsc constants.ts services/geminiService.ts tests/*.ts --module ESNext --moduleResolution bundler --target ES2020 --skipLibCheck true --outDir tests-dist"
   },
   "dependencies": {
     "@google/genai": "^1.1.0",
