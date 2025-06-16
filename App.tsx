@@ -68,6 +68,7 @@ const App: React.FC = () => {
               value={uiLanguage as UILanguage}
               onChange={(e) => setUiLanguage(e.target.value as UILanguage)}
               languages={SUPPORTED_UI_LANGUAGES}
+              label={t('selectUILanguage')}
             />
           </div>
         </header>
