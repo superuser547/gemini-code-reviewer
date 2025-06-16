@@ -1,5 +1,6 @@
 import React from 'react';
 import { StructuredReview, ReviewSection, ReviewPoint } from '../types';
+import { useI18n } from '../i18n';
 
 interface ReviewOutputProps {
   review: StructuredReview | null;
@@ -48,10 +49,12 @@ const CodeBlock: React.FC<{ code?: string; language?: string; title?: string }> 
 
 
 export const ReviewOutput: React.FC<ReviewOutputProps> = ({ review }) => {
+  const { t } = useI18n();
+
   if (!review) {
     return (
       <div className="bg-gray-800 p-6 border border-gray-700 rounded-lg shadow-inner min-h-[100px] flex items-center justify-center">
-        <p className="text-gray-400">No review data available.</p>
+        <p className="text-gray-400">{t('noReview')}</p>
       </div>
     );
   }
@@ -69,13 +72,13 @@ export const ReviewOutput: React.FC<ReviewOutputProps> = ({ review }) => {
   return (
     <div className="bg-gray-800 p-4 md:p-6 border border-gray-700 rounded-lg shadow-inner text-gray-200 space-y-6">
       <h2 className="text-3xl font-semibold text-sky-400 mb-4 border-b border-gray-700 pb-3">
-        Code Review Feedback
+        {t('feedbackTitle')}
         {review.languageDetected && <span className="text-lg text-gray-400 ml-2">({review.languageDetected})</span>}
       </h2>
 
       {review.overallSummary && (
         <section aria-labelledby="overall-summary-heading">
-          <h3 id="overall-summary-heading" className="text-xl font-semibold text-sky-300 mb-2">Overall Summary</h3>
+          <h3 id="overall-summary-heading" className="text-xl font-semibold text-sky-300 mb-2">{t('overallSummary')}</h3>
           <p className="text-gray-300 leading-relaxed">{renderDescription(review.overallSummary)}</p>
         </section>
       )}
@@ -87,7 +90,7 @@ export const ReviewOutput: React.FC<ReviewOutputProps> = ({ review }) => {
               <h3 id={`section-title-${sectionIndex}`} className="text-xl font-semibold text-sky-300 mb-3">{section.title}</h3>
               <ul className="space-y-4">
                 {section.points.map((point: ReviewPoint, pointIndex: number) => (
-                  <li key={pointIndex} className="bg-gray-750 p-4 rounded-md border border-gray-600 shadow">
+                  <li key={pointIndex} className="bg-gray-800 p-4 rounded-md border border-gray-600 shadow">
                     <div className="flex items-center mb-2">
                       <PointTypeBadge type={point.type} />
                       {point.lineNumber && (
@@ -112,7 +115,7 @@ export const ReviewOutput: React.FC<ReviewOutputProps> = ({ review }) => {
 
       {review.finalThoughts && (
         <section aria-labelledby="final-thoughts-heading" className="pt-4 border-t border-gray-700">
-          <h3 id="final-thoughts-heading" className="text-xl font-semibold text-sky-300 mb-2">Final Thoughts</h3>
+          <h3 id="final-thoughts-heading" className="text-xl font-semibold text-sky-300 mb-2">{t('finalThoughts')}</h3>
           <p className="text-gray-300 leading-relaxed">{renderDescription(review.finalThoughts)}</p>
         </section>
       )}

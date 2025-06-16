@@ -6,13 +6,14 @@ interface LanguageSelectorProps {
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   languages: LanguageOption[];
   disabled?: boolean;
+  label?: string;
 }
 
-export const LanguageSelector: React.FC<LanguageSelectorProps> = ({ value, onChange, languages, disabled }) => {
+export const LanguageSelector: React.FC<LanguageSelectorProps> = ({ value, onChange, languages, disabled, label }) => {
   return (
     <div>
       <label htmlFor="language-select" className="block text-sm font-medium text-gray-300 mb-1">
-        Select Language
+        {label || 'Select Language'}
       </label>
       <select
         id="language-select"

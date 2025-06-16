@@ -6,13 +6,14 @@ interface ReviewLanguageSelectorProps {
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   languages: ReviewLanguageOption[];
   disabled?: boolean;
+  label?: string;
 }
 
-export const ReviewLanguageSelector: React.FC<ReviewLanguageSelectorProps> = ({ value, onChange, languages, disabled }) => {
+export const ReviewLanguageSelector: React.FC<ReviewLanguageSelectorProps> = ({ value, onChange, languages, disabled, label }) => {
   return (
     <div>
       <label htmlFor="review-language-select" className="block text-sm font-medium text-gray-300 mb-1">
-        Select Review Language
+        {label || 'Select Review Language'}
       </label>
       <select
         id="review-language-select"

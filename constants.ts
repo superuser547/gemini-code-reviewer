@@ -1,5 +1,5 @@
 
-import { LanguageOption, ReviewLanguageOption } from './types';
+import { LanguageOption, ReviewLanguageOption, UILanguageOption } from './types';
 
 export const SUPPORTED_LANGUAGES: LanguageOption[] = [
   { value: 'javascript', label: 'JavaScript' },
@@ -28,4 +28,9 @@ export const SUPPORTED_REVIEW_LANGUAGES: ReviewLanguageOption[] = [
   { value: 'de', label: 'Deutsch (German)' },
   { value: 'fr', label: 'Français (French)' },
   { value: 'zh', label: '中文 (Chinese)' },
+];
+
+export const SUPPORTED_UI_LANGUAGES: UILanguageOption[] = [
+  { value: 'en', label: 'English' },
+  { value: 'ru', label: 'Русский' },
 ];
