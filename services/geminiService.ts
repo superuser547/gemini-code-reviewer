@@ -1,6 +1,6 @@
 import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
-import { Language, StructuredReview, ReviewLanguage } from '../types';
-import { SUPPORTED_LANGUAGES, SUPPORTED_REVIEW_LANGUAGES } from '../constants';
+import { Language, StructuredReview, ReviewLanguage } from '../types.js';
+import { SUPPORTED_LANGUAGES, SUPPORTED_REVIEW_LANGUAGES } from '../constants.js';
 
 const getLanguageLabel = (languageValue: Language): string => {
   const langObj = SUPPORTED_LANGUAGES.find(lang => lang.value === languageValue);
