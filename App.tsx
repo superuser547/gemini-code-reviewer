@@ -1,13 +1,15 @@
 import React, { useState, useCallback } from 'react';
 import { CodeInput } from './components/CodeInput';
 import { LanguageSelector } from './components/LanguageSelector';
-import { ReviewLanguageSelector } from './components/ReviewLanguageSelector'; // New import
+import { ReviewLanguageSelector } from './components/ReviewLanguageSelector';
+import { UILanguageSelector } from './components/UILanguageSelector';
 import { ReviewOutput } from './components/ReviewOutput';
 import { LoadingSpinner } from './components/LoadingSpinner';
 import { ErrorMessage } from './components/ErrorMessage';
 import { reviewCode } from './services/geminiService';
-import { SUPPORTED_LANGUAGES, SUPPORTED_REVIEW_LANGUAGES } from './constants'; // Import review languages
-import { Language, StructuredReview, ReviewLanguage } from './types'; // Import ReviewLanguage
+import { SUPPORTED_LANGUAGES, SUPPORTED_REVIEW_LANGUAGES, SUPPORTED_UI_LANGUAGES } from './constants';
+import { Language, StructuredReview, ReviewLanguage, UILanguage } from './types';
+import { useI18n } from './i18n';
 
 const App: React.FC = () => {
   const [code, setCode] = useState<string>('');
@@ -16,10 +18,11 @@ const App: React.FC = () => {
   const [review, setReview] = useState<StructuredReview | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const { t, language: uiLanguage, setLanguage: setUiLanguage } = useI18n();
 
   const handleSubmit = useCallback(async () => {
     if (!code.trim()) {
-      setError('Please enter some code to review.');
+      setError(t('enterCode'));
       return;
     }
     setError(null);
@@ -33,7 +36,7 @@ const App: React.FC = () => {
       if (err instanceof Error) {
         setError(err.message);
       } else {
-        setError('An unknown error occurred.');
+        setError(t('unknownError'));
       }
       console.error("Review Error:", err);
     } finally {
@@ -53,13 +56,20 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100 flex flex-col items-center p-4 md:p-8 selection:bg-sky-700 selection:text-white">
       <div className="w-full max-w-4xl">
-        <header className="mb-8 text-center">
+        <header className="mb-8 text-center space-y-4">
           <h1 className="text-4xl md:text-5xl font-bold text-sky-400">
-            Gemini Code Reviewer
+            {t('appTitle')}
           </h1>
-          <p className="text-gray-400 mt-2 text-lg">
-            Get AI-powered feedback on your code.
+          <p className="text-gray-400 text-lg">
+            {t('appSubtitle')}
           </p>
+          <div className="max-w-xs mx-auto">
+            <UILanguageSelector
+              value={uiLanguage as UILanguage}
+              onChange={(e) => setUiLanguage(e.target.value as UILanguage)}
+              languages={SUPPORTED_UI_LANGUAGES}
+            />
+          </div>
         </header>
 
         <main className="bg-gray-800 shadow-2xl rounded-lg p-6 md:p-8">
@@ -69,12 +79,14 @@ const App: React.FC = () => {
               onChange={(e) => setLanguage(e.target.value as Language)}
               languages={SUPPORTED_LANGUAGES}
               disabled={isLoading}
+              label={t('selectLanguage')}
             />
-            <ReviewLanguageSelector // Add the new selector
+            <ReviewLanguageSelector
               value={reviewLanguage}
               onChange={(e) => setReviewLanguage(e.target.value as ReviewLanguage)}
               languages={SUPPORTED_REVIEW_LANGUAGES}
               disabled={isLoading}
+              label={t('selectReviewLanguage')}
             />
             <div className="flex items-end space-x-3 md:col-start-3"> {/* Buttons aligned to the end of this grid cell */}
               <button
@@ -86,10 +98,10 @@ const App: React.FC = () => {
                 {isLoading ? (
                   <>
                     <LoadingSpinner small />
-                    <span className="ml-2">Reviewing...</span>
+                    <span className="ml-2">{t('reviewing')}</span>
                   </>
                 ) : (
-                  'Review Code'
+                  {t('reviewButton')}
                 )}
               </button>
               <button
@@ -98,7 +110,7 @@ const App: React.FC = () => {
                 className="w-full sm:w-auto flex-grow bg-gray-600 hover:bg-gray-500 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75 disabled:opacity-50 disabled:cursor-not-allowed"
                 aria-label="Clear code input and review feedback"
               >
-                Clear
+                {t('clearButton')}
               </button>
             </div>
           </div>
@@ -106,7 +118,7 @@ const App: React.FC = () => {
           <CodeInput
             value={code}
             onChange={(e) => setCode(e.target.value)}
-            placeholder={`Paste your ${SUPPORTED_LANGUAGES.find(l => l.value === language)?.label || 'code'} here...`}
+            placeholder={t('codePlaceholder', SUPPORTED_LANGUAGES.find(l => l.value === language)?.label || 'code')}
             aria-label="Code input area"
           />
 
@@ -115,8 +127,8 @@ const App: React.FC = () => {
           {isLoading && !review && (
             <div className="mt-6 flex flex-col items-center justify-center text-gray-400 p-8 border-2 border-dashed border-gray-700 rounded-lg" aria-live="polite">
               <LoadingSpinner />
-              <p className="mt-4 text-lg">Analyzing your code with Gemini...</p>
-              <p className="text-sm text-gray-500">This might take a few moments.</p>
+              <p className="mt-4 text-lg">{t('analyzing')}</p>
+              <p className="text-sm text-gray-500">{t('mightTake')}</p>
             </div>
           )}
           
@@ -127,8 +139,8 @@ const App: React.FC = () => {
           )}
         </main>
         <footer className="text-center mt-12 text-gray-500 text-sm">
-            <p>Powered by Google Gemini. Ensure your GEMINI_API_KEY environment variable is configured.</p>
-            <p>&copy; {new Date().getFullYear()} AI Code Reviewer</p>
+            <p>{t('poweredBy')}</p>
+            <p>{t('footer', new Date().getFullYear())}</p>
         </footer>
       </div>
     </div>

@@ -30,6 +30,13 @@ export interface ReviewLanguageOption {
   label: string;
 }
 
+export type UILanguage = 'en' | 'ru';
+
+export interface UILanguageOption {
+  value: UILanguage;
+  label: string;
+}
+
 // New types for structured review
 export interface ReviewPoint {
   type: 'finding' | 'suggestion' | 'positive' | 'question';
